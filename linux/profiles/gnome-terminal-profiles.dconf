@@ -1,0 +1,33 @@
+[/]
+default='b27f70ba-9258-419f-8bfc-ee1726434388'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', 'b27f70ba-9258-419f-8bfc-ee1726434388']
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+background-color='rgb(54,53,55)'
+bold-color-same-as-fg=true
+bold-is-bright=false
+cursor-colors-set=false
+font='Ubuntu Mono 11'
+foreground-color='rgb(253,249,243)'
+highlight-colors-set=false
+palette=['rgb(23,20,33)', 'rgb(192,28,40)', 'rgb(38,162,105)', 'rgb(162,115,76)', 'rgb(18,72,139)', 'rgb(163,71,186)', 'rgb(42,161,179)', 'rgb(208,207,204)', 'rgb(94,92,100)', 'rgb(246,97,81)', 'rgb(51,209,122)', 'rgb(233,173,12)', 'rgb(42,123,222)', 'rgb(192,97,203)', 'rgb(51,199,222)', 'rgb(255,255,255)']
+use-system-font=false
+use-theme-colors=true
+use-theme-transparency=true
+use-transparent-background=false
+visible-name='Default'
+
+[:b27f70ba-9258-419f-8bfc-ee1726434388]
+background-color='rgb(45,42,46)'
+bold-color-same-as-fg=true
+bold-is-bright=false
+cursor-colors-set=false
+enable-sixel=true
+font='Monofur Nerd Font 10'
+foreground-color='rgb(252,252,250)'
+highlight-colors-set=false
+palette=['rgb(54,53,55)', 'rgb(255,97,136)', 'rgb(169,220,118)', 'rgb(255,216,102)', 'rgb(252,152,103)', 'rgb(171,157,242)', 'rgb(120,220,232)', 'rgb(253,249,243)', 'rgb(144,142,143)', 'rgb(255,97,136)', 'rgb(169,220,118)', 'rgb(255,216,102)', 'rgb(252,152,103)', 'rgb(171,157,242)', 'rgb(120,220,232)', 'rgb(253,249,243)']
+use-system-font=false
+use-theme-colors=false
+use-transparent-background=false
+visible-name='Monokai Pro'
