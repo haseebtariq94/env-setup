@@ -53,7 +53,7 @@ DEPENDENCIES=(
     ["npm"]="npm"
     ["xclip"]="xclip"
     ["cmake"]="cmake"
-    ["gettext"] = "gettext"
+    ["gettext"]="gettext"
 )
 MISSING_DEPENDENCIES=()
 for PACKAGE in "${!DEPENDENCIES[@]}"; do
