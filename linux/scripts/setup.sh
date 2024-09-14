@@ -146,7 +146,7 @@ esac
 install_neovim() {
     echo "Installing the latest version of Neovim..."
 
-    git clone https://github.com/neovim/neovim.git -b stable &&
+    git clone --depth 1 --branch stable https://github.com/neovim/neovim.git &&
     cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo &&
     sudo make install && cd .. && rm -rf neovim ||
         { cd $LINUX_DIR/scripts; rm -rf neovim &> /dev/null; error "Failed to install Neovim"; }
