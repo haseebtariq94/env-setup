@@ -22,8 +22,8 @@ if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ||
    [ -z "$XDG_SESSION_TYPE" ]; then
     TERMINAL_NAME="unknown"
 else
-    PARENT_PID=$(ps -o ppid= -p $$)
-    TERMINAL_NAME=$(ps -o comm= -p "$PARENT_PID" | sed 's/-$//')
+    PARENT_PID=$(ps -o ppid= -p ${PPID})
+    TERMINAL_NAME=$(ps -o comm= -p ${PARENT_PID} | sed 's/-$//')
 fi
 SHELL_NAME=$(basename "$SHELL")
 
