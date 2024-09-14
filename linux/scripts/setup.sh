@@ -121,7 +121,7 @@ if ! fc-list | grep -qi "Monofur Nerd Font"; then
 
     wget -qO- "https://github.com/ryanoasis/nerd-fonts/releases/download/$LATEST_VERSION/Monofur.zip" -O /tmp/Monofur.zip &&
     unzip -o /tmp/Monofur.zip -d ~/.local/share/fonts &&
-    fc-cache -fv ||
+    fc-cache -fv && rm /tmp/Monofur.zip ||
         { rm /tmp/Monofur.zip &> /dev/null; error "Failed to install Monofur Nerd Font."; }
 fi
 
@@ -144,10 +144,10 @@ esac
 install_neovim() {
     echo "Installing the latest version of Neovim..."
 
-    wget -qO- "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz" -O /tmp/nvim-linux64.tar.gz &&
-    tar xzvf /tmp/nvim-linux64.tar.gz -C /tmp &&
-    sudo mv /tmp/nvim-linux64/bin/nvim /usr/local/bin/nvim ||
-        { rm -rf /tmp/nvim-linux64 /tmp/nvim-linux64.tar.gz &> /dev/null; error "Failed to install Neovim."; }
+    git clone https://github.com/neovim/neovim.git -b stable &&
+    cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo &&
+    sudo make install && cd .. && rm -rf neovim ||
+        { rm -rf neovim &> /dev/null; error "Failed to install Neovim"; }
 }
 
 # Check if Neovim is installed and update if necessary
