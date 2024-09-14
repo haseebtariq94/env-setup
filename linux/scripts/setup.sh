@@ -51,7 +51,8 @@ DEPENDENCIES=(
     ["ripgrep"]="rg"
     ["nodejs"]="node"
     ["npm"]="npm"
-    ["xclip"]="xclip"
+    ["xclip"]="xclip",
+    ["cmake"]="cmake"
 )
 MISSING_DEPENDENCIES=()
 for PACKAGE in "${!DEPENDENCIES[@]}"; do
@@ -147,7 +148,7 @@ install_neovim() {
     git clone https://github.com/neovim/neovim.git -b stable &&
     cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo &&
     sudo make install && cd .. && rm -rf neovim ||
-        { rm -rf neovim &> /dev/null; error "Failed to install Neovim"; }
+        { cd $LINUX_DIR/scripts; rm -rf neovim &> /dev/null; error "Failed to install Neovim"; }
 }
 
 # Check if Neovim is installed and update if necessary
