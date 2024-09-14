@@ -18,8 +18,13 @@ if [ -z "$LINUX_DIR" ]; then
 fi
 
 # Get the names of terminal and shell
-PARENT_PID=$(ps -o ppid= -p $$)
-TERMINAL_NAME=$(ps -o comm= -p "$PARENT_PID" | sed 's/-$//')
+if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ||
+   (! pgrep -x "Xorg" > /dev/null && ! pgrep -x "Wayland" > /dev/null); then
+    TERMINAL_NAME="unknown"
+else
+    PARENT_PID=$(ps -o ppid= -p $$)
+    TERMINAL_NAME=$(ps -o comm= -p "$PARENT_PID" | sed 's/-$//')
+fi
 SHELL_NAME=$(ps -o comm= -p $$)
 
 # Detect the package manager
