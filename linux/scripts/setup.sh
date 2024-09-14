@@ -51,8 +51,9 @@ DEPENDENCIES=(
     ["ripgrep"]="rg"
     ["nodejs"]="node"
     ["npm"]="npm"
-    ["xclip"]="xclip",
+    ["xclip"]="xclip"
     ["cmake"]="cmake"
+    ["gettext"] = "gettext"
 )
 MISSING_DEPENDENCIES=()
 for PACKAGE in "${!DEPENDENCIES[@]}"; do
