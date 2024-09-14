@@ -25,7 +25,7 @@ else
     PARENT_PID=$(ps -o ppid= -p $$)
     TERMINAL_NAME=$(ps -o comm= -p "$PARENT_PID" | sed 's/-$//')
 fi
-SHELL_NAME=$(ps -o comm= -p $$)
+SHELL_NAME=$(basename "$SHELL")
 
 # Detect the package manager
 PACKAGE_MANAGERS=("apt" "yum" "dnf" "pacman")
