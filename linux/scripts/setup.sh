@@ -42,11 +42,22 @@ elif [ "$PACKAGE_MANAGER" == "apt" ]; then
 fi
 
 # Install missing dependencies
-DEPENDENCIES=("autojump" "bat" "curl" "unzip" "ripgrep" "nodejs" "npm" "xclip")
+declare -A DEPENDENCIES
+DEPENDENCIES=(
+    ["autojump"]="autojump"
+    ["bat"]="bat"
+    ["curl"]="curl"
+    ["unzip"]="unzip"
+    ["ripgrep"]="rg"
+    ["nodejs"]="node"
+    ["npm"]="npm"
+    ["xclip"]="xclip"
+)
 MISSING_DEPENDENCIES=()
-for DEP in "${DEPENDENCIES[@]}"; do
-    if ! command -v $DEP &> /dev/null; then
-        MISSING_DEPENDENCIES+=($DEP)
+for PACKAGE in "${!DEPENDENCIES[@]}"; do
+    COMMAND=${DEPENDENCIES[$PACKAGE]}
+    if [ ! -x "/usr/bin/$COMMAND" ] && ! timeout 5s command -v $COMMAND &> /dev/null; then
+        MISSING_DEPENDENCIES+=($PACKAGE)
     fi
 done
 if [ ${#MISSING_DEPENDENCIES[@]} -ne 0 ]; then
