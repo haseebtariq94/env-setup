@@ -3,12 +3,24 @@
 set -e
 
 error() {
-    echo -e "\033[0;31m$1\033[0m"
+    echo -e "\033[1;31m$1\033[0m"
     exit 1
 }
 
 warning() {
-    echo -e "\033[0;33m$1\033[0m"
+    echo -e "\033[1;33m$1\033[0m"
+}
+
+success() {
+    echo -e "\033[1;32m$1\033[0m"
+}
+
+info() {
+    echo -e "\033[1;35m$1\033[0m"
+}
+
+prompt() {
+    echo -e "\033[1;34m$1\033[0m"
 }
 
 # Determine the directory with Linux settings
@@ -63,19 +75,20 @@ for PACKAGE in "${!DEPENDENCIES[@]}"; do
     fi
 done
 if [ ${#MISSING_DEPENDENCIES[@]} -ne 0 ]; then
-    echo "Installing missing dependencies: ${MISSING_DEPENDENCIES[@]}..."
+    info "Installing missing dependencies: ${MISSING_DEPENDENCIES[@]}..."
     for DEP in "${MISSING_DEPENDENCIES[@]}"; do
-        sudo ${PACKAGE_MANAGER} install -y "$DEP" || warning "Failed to install $DEP."
+        sudo ${PACKAGE_MANAGER} install -y "$DEP" || error "Failed to install $DEP."
     done
 else
-    echo "All dependencies are already installed."
+    success "All dependencies are already installed."
 fi
 
 # Install zsh if required
 if ! command -v zsh &> /dev/null; then
-    read -p "zsh is not installed. Do you want to install zsh? (Y/n): " choice
+    prompt "zsh is not installed. Do you want to install zsh? (Y/n): "
+    read -r choice
     if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
-        echo "Installing zsh and oh-my-zsh..."
+        info "Installing zsh and oh-my-zsh..."
         sudo ${PACKAGE_MANAGER} install -y zsh || error "Failed to install zsh."
     else
         warning "zsh installation skipped."
@@ -85,7 +98,7 @@ fi
 # Install oh-my-zsh and plugins if zsh is installed
 if command -v zsh &> /dev/null; then
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        echo "Installing oh-my-zsh and plugins..."
+        info "Installing oh-my-zsh and plugins..."
 
         sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" ||
             error "Failed to install oh-my-zsh."
@@ -95,11 +108,11 @@ if command -v zsh &> /dev/null; then
         git clone https://github.com/fdellwing/zsh-bat.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-bat ||
             error "Failed to install plugins."
     else
-        echo "oh-my-zsh is already installed."
+        success "oh-my-zsh is already installed."
     fi
 
     if [ "$SHELL_NAME" != "zsh" ]; then
-        echo "Changing default shell to zsh..."
+        info "Changing default shell to zsh..."
         chsh -s $(which zsh) || error "Failed to change default shell to zsh."
     fi
 else
@@ -108,12 +121,7 @@ fi
 
 # Install Monofur Nerd Font if not installed
 if ! fc-list | grep -qi "Monofur Nerd Font"; then
-    echo "Installing Monofur Nerd Font..."
-
-    if ! command -v curl &> /dev/null; then
-        echo "Installing curl..."
-        sudo "$PACKAGE_MANAGER" install -y curl || error "Failed to install curl."
-    fi
+    info "Installing Monofur Nerd Font..."
 
     LATEST_VERSION=$(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
     if [ -z "$LATEST_VERSION" ]; then
@@ -130,12 +138,12 @@ fi
 # Load terminal profiles
 case "$TERMINAL_NAME" in
     "gnome-terminal")
-        echo "Loading GNOME Terminal profiles..."
+        info "Loading GNOME Terminal profiles..."
         dconf load /org/gnome/terminal/legacy/profiles:/ < "$LINUX_DIR/profiles/gnome-terminal-profiles.dconf" ||
             error "Failed to load GNOME Terminal profiles."
         ;;
     "konsole")
-        echo "Loading Konsole profiles..."
+        info "Loading Konsole profiles..."
         cp -r "$LINUX_DIR/profiles/konosle" "$HOME/.local/share/"
         ;;
     *)
@@ -144,7 +152,7 @@ case "$TERMINAL_NAME" in
 esac
 
 install_neovim() {
-    echo "Installing the latest version of Neovim..."
+    info "Installing the latest version of Neovim..."
 
     git clone --depth 1 --branch stable https://github.com/neovim/neovim.git &&
     cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo &&
@@ -160,7 +168,8 @@ if command -v nvim &> /dev/null; then
     if [[ "$INSTALLED_VERSION" < "0.9" ]]; then
         install_neovim
     elif [[ "$INSTALLED_VERSION" < "$LATEST_VERSION" ]]; then
-        read -p "A newer version of Neovim ($LATEST_VERSION) is available. Do you want to update? (Y/n): " choice
+        prompt "A newer version of Neovim ($LATEST_VERSION) is available. Do you want to update? (Y/n): "
+        read -r choice
         if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
             install_neovim
         fi
@@ -170,6 +179,6 @@ else
 fi
 
 # Copy dotfiles to the home directory
-echo "Copying files from $LINUX_DIR/dots to the home directory..."
+info "Copying files from $LINUX_DIR/dots to the home directory..."
 cp -r "$LINUX_DIR/dots/." "$HOME/" ||
     error "Failed to copy files to the home directory."
