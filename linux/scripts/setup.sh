@@ -57,7 +57,7 @@ fi
 declare -A DEPENDENCIES
 DEPENDENCIES=(
     ["autojump"]="autojump"
-    ["bat"]="bat"
+    ["bat"]="rcat"
     ["curl"]="curl"
     ["unzip"]="unzip"
     ["ripgrep"]="rg"
