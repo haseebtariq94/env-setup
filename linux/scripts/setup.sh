@@ -19,7 +19,7 @@ fi
 
 # Get the names of terminal and shell
 if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ||
-   (! pgrep -x "Xorg" > /dev/null && ! pgrep -x "Wayland" > /dev/null); then
+   [ -z "$XDG_SESSION_TYPE" ]; then
     TERMINAL_NAME="unknown"
 else
     PARENT_PID=$(ps -o ppid= -p $$)
