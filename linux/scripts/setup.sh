@@ -65,7 +65,7 @@ DEPENDENCIES=(
     ["npm"]="npm"
     ["xclip"]="xclip"
     ["cmake"]="cmake"
-    ["gettext"]="gettext"
+    ["gettext"]="xgettext"
 )
 MISSING_DEPENDENCIES=()
 for PACKAGE in "${!DEPENDENCIES[@]}"; do
@@ -75,7 +75,7 @@ for PACKAGE in "${!DEPENDENCIES[@]}"; do
     fi
 done
 if [ ${#MISSING_DEPENDENCIES[@]} -ne 0 ]; then
-    info "Installing missing dependencies: ${MISSING_DEPENDENCIES[@]}..."
+    info "Installing missing dependencies: ${MISSING_DEPENDENCIES[*]}..."
     for DEP in "${MISSING_DEPENDENCIES[@]}"; do
         sudo ${PACKAGE_MANAGER} install -y "$DEP" || error "Failed to install $DEP."
     done
