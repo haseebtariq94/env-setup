@@ -29,15 +29,15 @@ vim.opt.isfname:append('@-@')
 vim.opt.updatetime = 50
 
 vim.api.nvim_create_autocmd('FileType', {
-	pattern = { '*' },
-	callback = function(args)
-		local ft = vim.bo[args.buf].filetype
-		if ft == 'c' then
-			vim.opt.tabstop = 8
-			vim.opt.softtabstop = 8
-			vim.opt.shiftwidth = 8
-			
+    pattern = { '*' },
+    callback = function(args)
+        local ft = vim.bo[args.buf].filetype
+        if ft == 'c' then
+            vim.opt.tabstop = 8
+            vim.opt.softtabstop = 8
+            vim.opt.shiftwidth = 8
+
             vim.opt.colorcolumn = '80'
-		end
-	end
+        end
+    end
 })
