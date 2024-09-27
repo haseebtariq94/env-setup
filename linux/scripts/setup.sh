@@ -119,7 +119,7 @@ else
     warning "zsh is not installed. Skipping oh-my-zsh installation."
 fi
 
-# Install Monofur Nerd Font if not installed
+# Install Agave Nerd Font if not installed
 if ! fc-list | grep -qi "Agave Nerd Font"; then
     info "Installing Agave Nerd Font..."
 
@@ -129,10 +129,10 @@ if ! fc-list | grep -qi "Agave Nerd Font"; then
         LATEST_VERSION="v3.2.1"
     fi
 
-    wget -qO- "https://github.com/ryanoasis/nerd-fonts/releases/download/$LATEST_VERSION/Agave.zip" -O /tmp/Agave.zip &&
+    wget "https://github.com/ryanoasis/nerd-fonts/releases/download/$LATEST_VERSION/Agave.zip" -O /tmp/Agave.zip &&
     unzip -o /tmp/Agave.zip -d ~/.local/share/fonts &&
     fc-cache -fv && rm /tmp/Agave.zip ||
-        { rm /tmp/Agave.zip &> /dev/null; error "Failed to install Monofur Nerd Font."; }
+        { rm /tmp/Agave.zip &> /dev/null; error "Failed to install Agave Nerd Font."; }
 fi
 
 # Load terminal profiles
