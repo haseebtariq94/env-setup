@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=Monokai Pro
-Font=Monofur Nerd Font,10,-1,5,50,0,0,0,0,0
+Font=Agave Nerd Font,10,-1,5,50,0,0,0,0,0
 
 [Cursor Options]
 CursorShape=1

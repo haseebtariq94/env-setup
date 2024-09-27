@@ -120,8 +120,8 @@ else
 fi
 
 # Install Monofur Nerd Font if not installed
-if ! fc-list | grep -qi "Monofur Nerd Font"; then
-    info "Installing Monofur Nerd Font..."
+if ! fc-list | grep -qi "Agave Nerd Font"; then
+    info "Installing Agave Nerd Font..."
 
     LATEST_VERSION=$(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
     if [ -z "$LATEST_VERSION" ]; then
@@ -129,10 +129,10 @@ if ! fc-list | grep -qi "Monofur Nerd Font"; then
         LATEST_VERSION="v3.2.1"
     fi
 
-    wget -qO- "https://github.com/ryanoasis/nerd-fonts/releases/download/$LATEST_VERSION/Monofur.zip" -O /tmp/Monofur.zip &&
-    unzip -o /tmp/Monofur.zip -d ~/.local/share/fonts &&
-    fc-cache -fv && rm /tmp/Monofur.zip ||
-        { rm /tmp/Monofur.zip &> /dev/null; error "Failed to install Monofur Nerd Font."; }
+    wget -qO- "https://github.com/ryanoasis/nerd-fonts/releases/download/$LATEST_VERSION/Agave.zip" -O /tmp/Agave.zip &&
+    unzip -o /tmp/Agave.zip -d ~/.local/share/fonts &&
+    fc-cache -fv && rm /tmp/Agave.zip ||
+        { rm /tmp/Agave.zip &> /dev/null; error "Failed to install Monofur Nerd Font."; }
 fi
 
 # Load terminal profiles

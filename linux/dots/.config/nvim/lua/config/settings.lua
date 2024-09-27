@@ -1,7 +1,6 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
-
 vim.opt.nu = true
+vim.opt.rnu = true
+vim.opt.cursorline = true
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
